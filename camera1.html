@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tester kamery internetowej</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+ 
+<body>
+<div class="container">
+<section class="home-section text-center">
+  <div class="row">
+    <div class="col text-center">
+      <button type="button" class="btn btn-link" href="#" id="camera-button">Kliknij, aby wyświetlić obraz z kamery</button>
+    </div>
+  </div>
+	</section>
+<section class="home-section text-center">
+    <div class="container-fluid">
+        <div class="row" >
+            <div class="embed-responsive embed-responsive-1by1">
+                  	<video autoplay="true" id="videoElement" style="max-height:600px;">
+	
+	</video>
+            </div>
+        </div>
+    </div>
+</section>  
+  
+</div>
+
+
+
+</body>
+<script>
+
+var button = document.getElementById("camera-button");
+button.addEventListener("click", showCamera);
+
+function showCamera() {
+	var button = document.getElementById("camera-button");
+	var video = document.getElementById("videoElement");
+	
+	if(button.innerHTML == "Wyłącz kamerę"){
+		if ("srcObject" in video) {
+			video.srcObject = null;
+		}	
+		video.pause();
+		video.src = "";
+		button.innerHTML = "Kliknij, aby wyświetlić obraz z kamery" 
+		console.log("wychodzimy");
+		return;
+	}
+
+		console.log("wlaczamy");
+	if (navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function (stream) {
+      video.srcObject = stream;
+	  var button = document.getElementById("camera-button");
+	  button.innerHTML = "Wyłącz kamerę";
+	  
+    })
+    .catch(function (err0r) {
+      console.log("Something went wrong!");
+    });
+}
+
+}
+
+</script>
+</html>
